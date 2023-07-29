@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 def is_valid_path(file_path):
     if file_path and Path(file_path).exists():
         return True
-    sg.popup_error("file path not correct")
+    # sg.popup_error("file path not correct")
     return False
 
 
@@ -25,19 +25,23 @@ def main_window():
     layout = [
         [
             sg.Text("PDFs to Merge:", s=15, justification="r"),
-            sg.Input(key="input_files", do_not_clear=False),
-            sg.FilesBrowse(),
+            sg.Input(key="input_files"),
+            sg.FilesBrowse(file_types=(("PDFs", "*.pdf"))),
         ],
         [
             sg.Text("File Name:", s=15, justification="r"),
-            sg.Input(key="name", do_not_clear=False),
+            sg.Input(key="name"),
         ],
         [
             sg.Text("Output Folder:", s=15, justification="r"),
-            sg.Input(key="output_path", do_not_clear=False),
+            sg.Input(key="output_path"),
             sg.FolderBrowse(),
         ],
-        [sg.Button("Merge PDFs", button_color="tomato"), sg.Exit()],
+        [
+            sg.Button("Merge PDFs", button_color="tomato"),
+            sg.Button("Reset Inputs"),
+            sg.Exit(),
+        ],
     ]
 
     window = sg.Window("PDF Merger", layout)
@@ -48,17 +52,23 @@ def main_window():
         if event in (sg.WINDOW_CLOSED, "Exit"):
             break
         if event == "Merge PDFs":
-            # sg.popup_error("Not yet implemented")
-            files_to_merge = values["input_files"].split(";")
+            input_files = values["input_files"]
             output_path = values["output_path"]
             file_name = values["name"]
 
-            if is_valid_path(output_path):
+            if input_files and is_valid_path(output_path) and len(file_name) > 0:
                 merge_pdfs(
-                    files_to_merge=files_to_merge,
+                    files_to_merge=input_files.split(";"),
                     output_path=output_path,
                     file_name=file_name,
                 )
+                sg.popup("DONE!")
+            else:
+                sg.popup("Check your Input")
+        if event == "Reset Inputs":
+            for key, element in window.key_dict.items():
+                if isinstance(element, sg.Input):
+                    element.update("")
     window.close()
 
 
@@ -70,7 +80,6 @@ if __name__ == "__main__":
     theme = settings["GUI"]["theme"]
     font_family = settings["GUI"]["font_family"]
     font_size = int(settings["GUI"]["font_size"])
-    print(type(font_size))
     sg.theme(theme)
     sg.set_options(font=(font_family, font_size))
     main_window()
