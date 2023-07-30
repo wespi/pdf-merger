@@ -26,7 +26,7 @@ def main_window():
         [
             sg.Text("PDFs to Merge:", s=15, justification="r"),
             sg.Input(key="input_files"),
-            sg.FilesBrowse(file_types=(("PDFs", "*.pdf"))),
+            sg.FilesBrowse(file_types=(('PDFs', '*.pdf'),)),
         ],
         [
             sg.Text("File Name:", s=15, justification="r"),
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     )
     theme = settings["GUI"]["theme"]
     font_family = settings["GUI"]["font_family"]
-    font_size = int(settings["GUI"]["font_size"])
+    # font_size = settings["GUI"]["font_size"]
     sg.theme(theme)
-    sg.set_options(font=(font_family, font_size))
+    # sg.set_options(font=(font_family, font_size))
     main_window()
