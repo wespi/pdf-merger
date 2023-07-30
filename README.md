@@ -20,4 +20,4 @@ For this step we use `pyinstaller` and the convertion is done as follows
 pyinstaller --noconfirm --onefile --windowed --name "PDF Merger" --icon=merger_icon.icns main.py
 ```
 
-Related to the convertion is [this](https://www.youtube.com/watch?v=jnUpSK3D3is&t=93s&ab_channel=ThePyCoach) video.
+Related to the convertion is [this](https://www.youtube.com/watch?v=jnUpSK3D3is&t=93s&ab_channel=ThePyCoach) video and [this](https://github.com/pyinstaller/pyinstaller/issues/3968) forum post.

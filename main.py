@@ -26,7 +26,7 @@ def main_window():
         [
             sg.Text("PDFs to Merge:", s=15, justification="r"),
             sg.Input(key="input_files"),
-            sg.FilesBrowse(file_types=(('PDFs', '*.pdf'),)),
+            sg.FilesBrowse(file_types=(("PDFs", "*.pdf"),)),
         ],
         [
             sg.Text("File Name:", s=15, justification="r"),
@@ -73,13 +73,9 @@ def main_window():
 
 
 if __name__ == "__main__":
-    SETTINGS_PATH = Path.cwd()
-    settings = sg.UserSettings(
-        path=SETTINGS_PATH, filename="config.ini", use_config_file=True
-    )
-    theme = settings["GUI"]["theme"]
-    font_family = settings["GUI"]["font_family"]
-    # font_size = settings["GUI"]["font_size"]
-    sg.theme(theme)
-    # sg.set_options(font=(font_family, font_size))
+    THEME = "DarkTeal10"
+    FONT_FAMILY = "Arial"
+    FONT_SIZE = 14
+    sg.theme(THEME)
+    sg.set_options(font=(FONT_FAMILY, FONT_SIZE))
     main_window()
